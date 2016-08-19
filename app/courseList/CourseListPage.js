@@ -10,15 +10,32 @@ class CourseListPage extends Component {
 
   constructor(props) {
     super(props)
+    this.initProps(this.props);
+  }
+
+  initProps(props) {
     let semester = props.route.semesters[props.route.semesters.length - 1];
     if (props.params.semester && _.includes(props.route.semesters, props.params.semester)) {
       semester = props.params.semester
     }
-    this.state = {
-      // the latest semester
-      semester: semester,
-      courses: [],
+    if(!this.state) {
+      this.state = {
+        // the latest semester
+        semester,
+        courses: [],
+      }
+    } else {
+      this.setState({
+        semester,
+        courses: [],
+      })
     }
+    
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.initProps(nextProps);
+    this.loadCoursesFromServer();
   }
 
   loadCoursesFromServer() {
@@ -36,9 +53,6 @@ class CourseListPage extends Component {
 
   handleSemesterChange(semester) {
     browserHistory.push(`/semester/${semester}`)
-    this.setState({semester: semester}, function () {
-      this.loadCoursesFromServer()
-    });
   }
 
   componentDidMount() {

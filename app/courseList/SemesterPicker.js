@@ -17,10 +17,10 @@ class SemesterPicker extends Component {
         Semester:
         <select className="form-control"
                 onChange={e => this.handleSemesterChanged(e)}
-                defaultValue={this.props.semester}>
-          {this.props.semesters.map(function (semester) {
-            return (<option key={semester} value={semester}>{semester}</option>)
-          })}
+                value={this.props.semester}>
+          {this.props.semesters.map(semester => (
+            <option key={semester} value={semester}>{semester}</option>
+          ))}
         </select>
       </div>
     );
