@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import _ from 'lodash'
 import SectionGroupRecord from './SectionGroupRecord'
 
 class SectionGroupTable extends Component {
@@ -8,9 +9,9 @@ class SectionGroupTable extends Component {
 
   render() {
     let groups = this.props.groups.map((group) => {
+      let key = `${group.day}_${_.snakeCase(group.time)}_${group.building}_${_.snakeCase(group.room)}`
       return (
-        <SectionGroupRecord key={`${group.day}_${group.time}_${group.building}_${group.room}`}
-                            group={group}/>
+        <SectionGroupRecord key={key} {...group}/>
       )
     })
     return (

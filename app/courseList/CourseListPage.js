@@ -24,10 +24,9 @@ class CourseListPage extends Component {
   }
 
   getSemester() {
-    const props = this.props;
-    let semester = props.route.semesters[props.route.semesters.length - 1];
-    if (props.params.semester && _.includes(props.route.semesters, props.params.semester)) {
-      semester = props.params.semester
+    let semester = this.props.route.semesters[this.props.route.semesters.length - 1];
+    if (this.props.params.semester && _.includes(this.props.route.semesters, this.props.params.semester)) {
+      semester = this.props.params.semester
     }
     return semester;
   }

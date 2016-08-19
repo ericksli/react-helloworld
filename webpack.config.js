@@ -8,20 +8,14 @@ module.exports = {
     inline: true,
     contentBase: './app',
     port: 8100,
-    historyApiFallback: true,
-    quiet: true
+    historyApiFallback: true
   },
   module: {
     loaders: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel',
-        query:
-        {
-          presets: ['es2015', 'react'],
-          plugins: ['transform-class-properties']
-        }
+        loader: 'babel'
       }
     ]
   },

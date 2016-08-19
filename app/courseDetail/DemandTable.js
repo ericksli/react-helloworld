@@ -10,7 +10,7 @@ class DemandTable extends Component {
     let rows = this.props.demand.map((demandItem) => {
       return (
         <DemandTableRow key={`${demandItem.programme}_${demandItem.major}_${demandItem.cohort}`}
-                        demandItem={demandItem}/>
+                        {...demandItem}/>
       )
     })
     return (
