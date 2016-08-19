@@ -10,37 +10,31 @@ class CourseListPage extends Component {
 
   constructor(props) {
     super(props)
-    this.initProps(this.props);
+    this.state = {
+      courses: []
+    }
   }
 
-  initProps(props) {
+  componentWillReceiveProps(nextProps) {
+    this.loadCoursesFromServer();
+  }
+
+  componentDidMount() {
+    this.loadCoursesFromServer()
+  }
+
+  getSemester(specificProps) {
+    const props = this.props || specificProps;
     let semester = props.route.semesters[props.route.semesters.length - 1];
     if (props.params.semester && _.includes(props.route.semesters, props.params.semester)) {
       semester = props.params.semester
     }
-    if(!this.state) {
-      this.state = {
-        // the latest semester
-        semester,
-        courses: [],
-      }
-    } else {
-      this.setState({
-        semester,
-        courses: [],
-      })
-    }
-    
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.initProps(nextProps);
-    this.loadCoursesFromServer();
+    return semester;
   }
 
   loadCoursesFromServer() {
     $.ajax({
-      url: `https://fir-test-197b2.firebaseapp.com/course-offerings/${this.state.semester}/overview.json`,
+      url: `https://fir-test-197b2.firebaseapp.com/course-offerings/${this.getSemester()}/overview.json`,
       dataType: 'json',
       success: (data) => {
         this.setState({courses: data})
@@ -55,17 +49,13 @@ class CourseListPage extends Component {
     browserHistory.push(`/semester/${semester}`)
   }
 
-  componentDidMount() {
-    this.loadCoursesFromServer()
-  }
-
   render() {
     return (
       <div>
         <SemesterPicker semesters={this.props.route.semesters}
-                        semester={this.state.semester}
+                        semester={this.getSemester()}
                         onSemesterChange={e => this.handleSemesterChange(e)}/>
-        <CourseList semester={this.state.semester} courses={this.state.courses}/>
+        <CourseList semester={this.getSemester()} courses={this.state.courses}/>
       </div>
     );
   }

@@ -8,11 +8,10 @@ class CourseList extends Component {
   };
 
   render() {
-    let rows = this.props.courses.map((course) => {
-      return (
+    let rows = this.props.courses.map(course => (
         <CourseRow key={course.code} semester={this.props.semester} course={course}/>
-      );
-    });
+      )
+    );
     return (
       <table className="table table-striped">
         <thead>
