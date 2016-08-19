@@ -1,14 +1,10 @@
+const webpack = require('webpack');
+
 module.exports = {
   entry: './app/main.js',
   output: {
     path: './app',
     filename: 'bundle.js'
-  },
-  devServer: {
-    inline: true,
-    contentBase: './app',
-    port: 8100,
-    historyApiFallback: true
   },
   module: {
     loaders: [
@@ -18,5 +14,12 @@ module.exports = {
         loader: 'babel'
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production')
+      }
+    })
+  ]
 }
