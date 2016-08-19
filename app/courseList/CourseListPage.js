@@ -7,6 +7,7 @@ import CourseList from './CourseList'
 
 
 class CourseListPage extends Component {
+  courseListRequest = null
 
   constructor(props) {
     super(props)
@@ -23,6 +24,12 @@ class CourseListPage extends Component {
     this.loadCoursesFromServer()
   }
 
+  componentWillUnmount() {
+    if (this.courseListRequest != null) {
+      this.courseListRequest.abort();
+    }
+  }
+
   getSemester() {
     let semester = this.props.route.semesters[this.props.route.semesters.length - 1];
     if (this.props.params.semester && _.includes(this.props.route.semesters, this.props.params.semester)) {
@@ -32,7 +39,7 @@ class CourseListPage extends Component {
   }
 
   loadCoursesFromServer() {
-    $.ajax({
+    this.courseListRequest = $.ajax({
       url: `https://fir-test-197b2.firebaseapp.com/course-offerings/${this.getSemester()}/overview.json`,
       dataType: 'json',
       success: (data) => {

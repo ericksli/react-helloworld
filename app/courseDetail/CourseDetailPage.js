@@ -4,6 +4,8 @@ import SectionTable from './SectionTable'
 import DemandTable from './DemandTable'
 
 class CourseDetailPage extends Component {
+  courseDetailRequest = null
+
   constructor(props) {
     super(props)
     this.state = {
@@ -13,7 +15,7 @@ class CourseDetailPage extends Component {
   }
 
   loadCourseDetailFromServer() {
-    $.ajax({
+    this.courseDetailRequest = $.ajax({
       url: `https://fir-test-197b2.firebaseapp.com/course-offerings/${this.props.params.semester}/courses/${this.props.params.courseCode}.json`,
       dataType: 'json',
       success: (data) => {
@@ -28,6 +30,12 @@ class CourseDetailPage extends Component {
 
   componentDidMount() {
     this.loadCourseDetailFromServer()
+  }
+
+  componentWillUnmount() {
+    if (this.courseDetailRequest != null) {
+      this.courseDetailRequest.abort();
+    }
   }
 
   render() {
