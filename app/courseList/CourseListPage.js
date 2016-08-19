@@ -23,8 +23,8 @@ class CourseListPage extends Component {
     this.loadCoursesFromServer()
   }
 
-  getSemester(specificProps) {
-    const props = this.props || specificProps;
+  getSemester() {
+    const props = this.props;
     let semester = props.route.semesters[props.route.semesters.length - 1];
     if (props.params.semester && _.includes(props.route.semesters, props.params.semester)) {
       semester = props.params.semester
